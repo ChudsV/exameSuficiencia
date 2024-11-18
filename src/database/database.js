@@ -42,6 +42,8 @@ class Database extends Conexao {
                console.log('Tabela Feedback criada ou já existe.');
            }
        });
+
+
    }
 }
 
