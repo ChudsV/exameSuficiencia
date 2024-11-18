@@ -14,9 +14,9 @@ const handleRoute = (req, res) => {
            feedbackController.index(req, res);
        } else if (req.method === 'GET' && id) {
            feedbackController.show(req, res, id);
-       } else if (req.method === 'POST') {
+       } else if (req.method === 'POST' && req.url.includes("/cadastrar")) {
            feedbackController.store(req, res);
-       } else if (req.method === 'PUT' && id) {
+       } else if (req.method === 'PUT' && id && req.url.includes("/atualizar")) {
            feedbackController.update(req, res, id);
        } else {
            res.writeHead(404, { 'Content-Type': 'text/plain' });
