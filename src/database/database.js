@@ -1,13 +1,13 @@
 const Conexao = require('./conexao');
 
 class Database extends Conexao {
-   constructor() {
-       super();
-       this.createTables();
-   }
+    constructor() {
+        super();
+        this.createTables();
+    }
 
-   createTables() {
-       const sqlUsuario = `
+    createTables() {
+        const sqlUsuario = `
            CREATE TABLE IF NOT EXISTS Usuario (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
                nome TEXT,
@@ -16,7 +16,7 @@ class Database extends Conexao {
                senha TEXT
            )`;
 
-       const sqlFeedback = `
+        const sqlFeedback = `
            CREATE TABLE IF NOT EXISTS Feedback (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
                usuarioId INTEGER,
@@ -27,22 +27,22 @@ class Database extends Conexao {
                FOREIGN KEY(usuarioId) REFERENCES Usuario(id)
            )`;
 
-       this.db.run(sqlUsuario, (err) => {
-           if (err) {
-               console.error('Erro ao criar tabela Usuario:', err.message);
-           } else {
-               console.log('Tabela Usuario criada ou já existe.');
-           }
-       });
+        this.db.run(sqlUsuario, (err) => {
+            if (err) {
+                console.error('Erro ao criar tabela Usuario:', err.message);
+            } else {
+                console.log('Tabela Usuario criada ou já existe.');
+            }
+        });
 
-       this.db.run(sqlFeedback, (err) => {
-           if (err) {
-               console.error('Erro ao criar tabela Feedback:', err.message);
-           } else {
-               console.log('Tabela Feedback criada ou já existe.');
-           }
-       });
-   }
+        this.db.run(sqlFeedback, (err) => {
+            if (err) {
+                console.error('Erro ao criar tabela Feedback:', err.message);
+            } else {
+                console.log('Tabela Feedback criada ou já existe.');
+            }
+        });
+    }
 }
 
 new Database();

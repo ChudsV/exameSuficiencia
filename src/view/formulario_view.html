@@ -1,64 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastro de Feedback</title>
+    <meta charset="UTF-8">
+    <title>Cadastro de Feedback</title>
 </head>
+
 <body>
-  <h1>Novo usuario? <a href="/usuarios/cadastrar">Cadastrar Usuário</a></h1>
+    <h1>Novo usuario? <a href="/usuarios/cadastrar">Cadastrar Usuário</a></h1>
 
-  <h1>Cadastro de Feedback</h1>
-  <form id="feedbackForm">
-      <label for="titulo">Título:</label><br>
-      <input type="text" id="titulo" name="titulo" required><br><br>
+    <h1>Cadastro de Feedback</h1>
+    <form id="feedbackForm">
+        <label for="titulo">Título:</label><br>
+        <input type="text" id="titulo" name="titulo" required><br><br>
 
-      <label for="tipo">Tipo:</label><br>
-      <select id="tipo" name="tipo" required>
-          <option value="bug">Bug</option>
-          <option value="sugestao">Sugestão</option>
-          <option value="reclamacao">Reclamação</option>
-          <option value="feedback">Feedback</option>
-      </select><br><br>
+        <label for="tipo">Tipo:</label><br>
+        <select id="tipo" name="tipo" required>
+            <option value="bug">Bug</option>
+            <option value="sugestao">Sugestão</option>
+            <option value="reclamacao">Reclamação</option>
+            <option value="feedback">Feedback</option>
+        </select><br><br>
 
-      <label for="descricao">Descrição:</label><br>
-      <textarea id="descricao" name="descricao" required></textarea><br><br>
+        <label for="descricao">Descrição:</label><br>
+        <textarea id="descricao" name="descricao" required></textarea><br><br>
 
-      <button type="submit">Enviar</button>
-  </form>
+        <button type="submit">Enviar</button>
+    </form>
 
-  <h1> <a href="/feedbacks">Ver Feedbacks Cadastrados</a> </h1>
-  
-  <script>
-      document.getElementById('feedbackForm').addEventListener('submit', function(event) {
-          event.preventDefault();
+    <h1> <a href="/feedbacks">Ver Feedbacks Cadastrados</a> </h1>
 
-          const titulo = document.getElementById('titulo').value;
-          const tipo = document.getElementById('tipo').value;
-          const descricao = document.getElementById('descricao').value;
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function (event) {
+            event.preventDefault();
 
-          fetch('/feedbacks/cadastrar', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ titulo: titulo, tipo: tipo, descricao: descricao })
-          })
-          .then(response => response.json())
-          .then(data => {
-              if (data.message) {
-                  alert(data.message);
-              } else {
-                  alert('Erro ao cadastrar feedback.');
-              }
-          })
-          .catch(error => {
-              console.error('Erro:', error);
-              alert('Erro ao cadastrar feedback.');
-          });
-      });
+            const titulo = document.getElementById('titulo').value;
+            const tipo = document.getElementById('tipo').value;
+            const descricao = document.getElementById('descricao').value;
+
+            fetch('/feedbacks/cadastrar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ titulo: titulo, tipo: tipo, descricao: descricao })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                    } else {
+                        alert('Erro ao cadastrar feedback.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao cadastrar feedback.');
+                });
+        });
 
 
-      
-  </script>
+
+    </script>
 </body>
+
 </html>

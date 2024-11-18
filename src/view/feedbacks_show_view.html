@@ -1,94 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-   <meta charset="UTF-8">
-   <title>Detalhes do Feedback</title>
+    <meta charset="UTF-8">
+    <title>Detalhes do Feedback</title>
 </head>
+
 <body>
-   <h1>Detalhes do Feedback</h1>
-   <div>
-       <p><strong>ID:</strong> <span id="feedback_id_display"></span></p>
-       <p><strong>Título:</strong> <span id="titulo"></span></p>
-       <p><strong>Descrição:</strong> <span id="descricao"></span></p>
-       <p><strong>Tipo:</strong> <span id="tipo"></span></p>
-       <p><strong>Status:</strong> <span id="status"></span></p>
-   </div>
+    <h1>Detalhes do Feedback</h1>
+    <div>
+        <p><strong>ID:</strong> <span id="feedback_id_display"></span></p>
+        <p><strong>Título:</strong> <span id="titulo"></span></p>
+        <p><strong>Descrição:</strong> <span id="descricao"></span></p>
+        <p><strong>Tipo:</strong> <span id="tipo"></span></p>
+        <p><strong>Status:</strong> <span id="status"></span></p>
+    </div>
 
-   <a href="/feedbacks">Voltar</a><br><br>
+    <a href="/feedbacks">Voltar</a><br><br>
 
-   <form id="feedbackForm">
-       <input type="hidden" id="feedback_id" name="id">
-       <label for="novo_status">Novo Status:</label><br>
-       <select id="novo_status" name="status">
-           <option value="recebido">Recebido</option>
-           <option value="em análise">Em Análise</option>
-           <option value="em desenvolvimento">Em Desenvolvimento</option>
-           <option value="finalizado">Finalizado</option>
-       </select><br><br>
+    <form id="feedbackForm">
+        <input type="hidden" id="feedback_id" name="id">
+        <label for="novo_status">Novo Status:</label><br>
+        <select id="novo_status" name="status">
+            <option value="recebido">Recebido</option>
+            <option value="em análise">Em Análise</option>
+            <option value="em desenvolvimento">Em Desenvolvimento</option>
+            <option value="finalizado">Finalizado</option>
+        </select><br><br>
 
-       <button type="submit">Atualizar Status</button>
-   </form>
+        <button type="submit">Atualizar Status</button>
+    </form>
 
-   <script>
-       document.addEventListener('DOMContentLoaded', function() {
-           const pathParts = window.location.pathname.split('/');
-           const feedbackId = pathParts[pathParts.length - 1];
-           console.log(feedbackId);
-           
-           if (feedbackId) {
-               fetch(`/feedbacksunique/${feedbackId}`)
-                   .then(response => {
-                       if (!response.ok) {
-                           throw new Error('Network response was not ok');
-                       }
-                       return response.json();
-                   })
-                   .then(feedback => {
-                       document.getElementById('feedback_id_display').textContent = feedback.id;
-                       document.getElementById('feedback_id').value = feedback.id;
-                       document.getElementById('titulo').textContent = feedback.titulo;
-                       document.getElementById('descricao').textContent = feedback.descricao;
-                       document.getElementById('tipo').textContent = feedback.tipo;
-                       document.getElementById('status').textContent = feedback.status;
-                       document.getElementById('novo_status').value = feedback.status;
-                   })
-                   .catch(error => {
-                       console.error('Erro ao buscar detalhes do feedback:', error);
-                   });
-           } else {
-               console.error('ID do feedback não fornecido na URL');
-           }
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pathParts = window.location.pathname.split('/');
+            const feedbackId = pathParts[pathParts.length - 1];
+            console.log(feedbackId);
 
-           document.getElementById('feedbackForm').addEventListener('submit', function(event) {
-               event.preventDefault();
+            if (feedbackId) {
+                fetch(`/feedbacksunique/${feedbackId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(feedback => {
+                        document.getElementById('feedback_id_display').textContent = feedback.id;
+                        document.getElementById('feedback_id').value = feedback.id;
+                        document.getElementById('titulo').textContent = feedback.titulo;
+                        document.getElementById('descricao').textContent = feedback.descricao;
+                        document.getElementById('tipo').textContent = feedback.tipo;
+                        document.getElementById('status').textContent = feedback.status;
+                        document.getElementById('novo_status').value = feedback.status;
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar detalhes do feedback:', error);
+                    });
+            } else {
+                console.error('ID do feedback não fornecido na URL');
+            }
 
-               const novoStatus = document.getElementById('novo_status').value;
-               
-               fetch(`/feedbacks/atualizar/${feedbackId}`, {
-                   method: 'PUT',
-                   headers: {
-                       'Content-Type': 'application/json'
-                   },
-                   body: JSON.stringify({
-                       id: feedbackId,
-                       status: novoStatus
-                   })
-               })
-               .then(response => {
-                   if (!response.ok) {
-                       throw new Error('Network response was not ok');
-                   }
-                   return response.json();
-               })
-               .then(data => {
-                   alert('Status atualizado com sucesso');
-                   document.getElementById('status').textContent = novoStatus;
-               })
-               .catch(error => {
-                alert('Erro ao atualizar o status do feedback:', error);
-               });
-           });
-       });
-   </script>
+            document.getElementById('feedbackForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const novoStatus = document.getElementById('novo_status').value;
+
+                fetch(`/feedbacks/atualizar/${feedbackId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: feedbackId,
+                        status: novoStatus
+                    })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert('Status atualizado com sucesso');
+                        document.getElementById('status').textContent = novoStatus;
+                    })
+                    .catch(error => {
+                        alert('Erro ao atualizar o status do feedback:', error);
+                    });
+            });
+        });
+    </script>
 </body>
+
 </html>
