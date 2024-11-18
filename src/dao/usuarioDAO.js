@@ -10,6 +10,11 @@ class UsuarioDAO extends Conexao {
        const sql = `SELECT * FROM Usuario`;
        this.db.all(sql, [], callback);
    }
+
+   findByCredentials(login, senha, callback) {
+       const sql = `SELECT * FROM Usuario WHERE login = ? AND senha = ?`;
+       this.db.get(sql, [login, senha], callback);
+   }
 }
 
 module.exports = UsuarioDAO;
