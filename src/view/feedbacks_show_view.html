@@ -16,7 +16,7 @@
 
    <a href="/feedbacks">Voltar</a><br><br>
 
-   <form action="/feedbacks/atualizar" method="PUT">
+   <form id="feedbackForm">
        <input type="hidden" id="feedback_id" name="id">
        <label for="novo_status">Novo Status:</label><br>
        <select id="novo_status" name="status">
@@ -30,7 +30,7 @@
    </form>
 
    <script>
-       
+       document.addEventListener('DOMContentLoaded', function() {
            const pathParts = window.location.pathname.split('/');
            const feedbackId = pathParts[pathParts.length - 1];
            console.log(feedbackId);
@@ -58,7 +58,37 @@
            } else {
                console.error('ID do feedback não fornecido na URL');
            }
-       
+
+           document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+               event.preventDefault();
+
+               const novoStatus = document.getElementById('novo_status').value;
+               
+               fetch(`/feedbacks/atualizar/${feedbackId}`, {
+                   method: 'PUT',
+                   headers: {
+                       'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify({
+                       id: feedbackId,
+                       status: novoStatus
+                   })
+               })
+               .then(response => {
+                   if (!response.ok) {
+                       throw new Error('Network response was not ok');
+                   }
+                   return response.json();
+               })
+               .then(data => {
+                   alert('Status atualizado com sucesso');
+                   document.getElementById('status').textContent = novoStatus;
+               })
+               .catch(error => {
+                alert('Erro ao atualizar o status do feedback:', error);
+               });
+           });
+       });
    </script>
 </body>
 </html>
