@@ -47,13 +47,13 @@ class FeedbackController {
        });
    }
 
-   update(req, res, id) {
+   update(req, res) {
        let body = '';
        req.on('data', chunk => {
            body += chunk.toString();
        });
        req.on('end', () => {
-           const { status } = JSON.parse(body);
+           const { id, status } = JSON.parse(body);
            feedbackDAO.updateStatus(id, status, (err) => {
                if (err) {
                    res.writeHead(500, { 'Content-Type': 'application/json' });
