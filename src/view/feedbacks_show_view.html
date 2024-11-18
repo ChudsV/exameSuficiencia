@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Detalhes do Feedback</title>
+</head>
+<body>
+   <h1>Detalhes do Feedback</h1>
+   <div>
+       <p><strong>ID:</strong> <span id="feedback_id"></span></p>
+       <p><strong>ID do Usuário:</strong> <span id="usuario_id"></span></p>
+       <p><strong>Mensagem:</strong> <span id="mensagem"></span></p>
+       <p><strong>Status:</strong> <span id="status"></span></p>
+   </div>
+
+   <a href="/feedbacks">Voltar</a><br><br>
+
+   <form action="/feedback/atualizar" method="POST">
+       <input type="hidden" id="feedback_id" name="id">
+       <label for="novo_status">Novo Status:</label><br>
+       <select id="novo_status" name="status">
+           <option value="pendente">Pendente</option>
+           <option value="resolvido">Resolvido</option>
+       </select><br><br>
+
+       <button type="submit">Atualizar Status</button>
+   </form>
+</body>
+</html>
