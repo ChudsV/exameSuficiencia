@@ -15,10 +15,10 @@ const handleRoute = (req, res) => {
         if(req.method === 'GET' && req.url.includes('/listarusuarios')){
             usuarioController.getAll(req, res);
         }
-   } else if (route === 'feedbacks' || route === 'feedbacksview') {
+   } else if (route === 'feedbacks' || route === 'feedbacksview' || route === 'feedbacksunique') {
        if (req.method === 'GET' && req.url.includes("/feedbacksview")) {
            feedbackController.index(req, res);
-       } else if (req.method === 'GET' && id) {
+       } else if (req.method === 'GET' && id && req.url.includes("/feedbacksunique")) {
            feedbackController.show(req, res, id);
        } else if (req.method === 'POST' && req.url.includes("/cadastrar")) {
            feedbackController.store(req, res);
