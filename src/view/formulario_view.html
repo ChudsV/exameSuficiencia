@@ -26,6 +26,9 @@
 
       <button type="submit">Enviar</button>
   </form>
+
+  <h1>Ver Feedbacks cadastrados</h1>
+   <button id="feedbackviews">Ver Feedbacks</button>
   
   <script>
       document.getElementById('feedbackForm').addEventListener('submit', function(event) {
@@ -59,6 +62,11 @@
       document.getElementById('cadastroUsuarioButton').addEventListener('click', function() {
           window.location.href = '/usuarios/cadastrar';
       });
+
+      document.getElementById('feedbackviews').addEventListener('click', function() {
+          window.location.href = '/feedbacks';
+      });
+      
   </script>
 </body>
 </html>
