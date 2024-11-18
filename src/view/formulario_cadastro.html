@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Cadastro de Usuário</title>
+</head>
+<body>
+   <h1>Cadastro de Usuário</h1>
+   <form id="registerForm">
+       <label for="nome">Nome:</label><br>
+       <input type="text" id="nome" name="nome" required><br><br>
+       
+       <label for="login">Login:</label><br>
+       <input type="login" id="login" name="login" required><br><br>
+
+       <label for="email">Email:</label><br>
+       <input type="email" id="email" name="email" required><br><br>
+
+       <label for="senha">Senha:</label><br>
+       <input type="password" id="senha" name="senha" required><br><br>
+
+       <button type="submit">Cadastrar</button>
+   </form>
+
+   <script>
+       document.getElementById('registerForm').addEventListener('submit', function(event) {
+           event.preventDefault();
+
+           const nome = document.getElementById('nome').value;
+           const email = document.getElementById('email').value;
+           const senha = document.getElementById('senha').value;
+           const login = document.getElementById('login').value;
+
+           fetch('/usuarios/cadastrar', {
+               method: 'POST',
+               headers: {
+                   'Content-Type': 'application/json'
+               },
+               body: JSON.stringify({ nome, login, email, senha })
+           })
+           .then(response => response.json())
+           .then(data => {
+               if (data.message) {
+                alert('cadastro bem sucessedido, você será redirecionado para home ("/")');
+                    window.location.href = '/';
+               } else {
+                    alert('Erro ao cadastrar usuário.');
+               }
+           })
+           .catch(error => {
+               console.error('Erro:', error);
+               alert('Erro ao cadastrar usuário.');
+           });
+       });
+   </script>
+</body>
+</html>

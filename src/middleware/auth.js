@@ -5,6 +5,9 @@ function authMiddleware(req, res, next) {
    if (req.url === '/') {
        return next();
    }
+   if (req.url === '/usuarios/cadastrar') {
+    return next();
+}
 
    const authHeader = req.headers['authorization'];
 
@@ -18,6 +21,7 @@ function authMiddleware(req, res, next) {
    const [login, senha] = credentials.split(':');
 
    if(login === 'admin' && senha === '123456'){
+    req.userId = 0;
     return next();
    }
 
@@ -28,6 +32,7 @@ function authMiddleware(req, res, next) {
        }
 
        if (user) {
+           req.userId = user.id;
            return next();
        } else {
            res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="Restricted Area"', 'Content-Type': 'text/plain' });

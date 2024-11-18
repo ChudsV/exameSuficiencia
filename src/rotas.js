@@ -7,8 +7,14 @@ const handleRoute = (req, res) => {
    if (req.url === '/' && req.method === 'GET') {
        res.writeHead(200, { 'Content-Type': 'text/plain' });
        res.end('Bem-vindo à API!');
-   } else if (route === 'usuarios') {
-       usuarioController.handleRequest(req, res);
+   } 
+   if (route === 'usuarios') {
+        if (req.method === 'POST' && req.url.includes('/cadastrar')) {
+            usuarioController.register(req, res);
+        }
+        if(req.method === 'GET' && req.url.includes('/listarusuarios')){
+            usuarioController.getAll(req, res);
+        }
    } else if (route === 'feedbacks') {
        if (req.method === 'GET' && !id) {
            feedbackController.index(req, res);

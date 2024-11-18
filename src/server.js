@@ -39,6 +39,16 @@ const server = http.createServer((req, res) => {
                res.end(content);
            }
        });
+   } else if (req.url === '/usuarios/cadastrar' && req.method === 'GET') {
+       fs.readFile(path.join(__dirname, 'view', 'formulario_cadastro.html'), (err, content) => {
+           if (err) {
+               res.writeHead(500);
+               res.end('Erro ao carregar a página de cadastro.');
+           } else {
+               res.writeHead(200, { 'Content-Type': 'text/html' });
+               res.end(content);
+           }
+       });
    } else {
        authMiddleware(req, res, next);
    }

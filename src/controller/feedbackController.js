@@ -36,6 +36,7 @@ class FeedbackController {
        });
        req.on('end', () => {
            const feedback = JSON.parse(body);
+           feedback.usuarioId = req.userId; 
            feedbackDAO.create(feedback, (err) => {
                if (err) {
                    res.writeHead(500, { 'Content-Type': 'application/json' });
