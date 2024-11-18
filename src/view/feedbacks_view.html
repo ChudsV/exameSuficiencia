@@ -10,15 +10,62 @@
        <thead>
            <tr>
                <th>ID</th>
-               <th>ID do Usuário</th>
-               <th>Mensagem</th>
+               <th>Título</th>
+               <th>Descrição</th>
+               <th>Tipo</th>
                <th>Status</th>
                <th>Ações</th>
            </tr>
        </thead>
-       <tbody>
-           <!-- Feedbacks serão inseridos aqui -->
+       <tbody id="feedbackTableBody">
        </tbody>
    </table>
+
+   <script>
+       document.addEventListener('DOMContentLoaded', function() {
+           fetch('/feedbacksview')
+               .then(response => response.json())
+               .then(feedbacks => {
+                   const tbody = document.getElementById('feedbackTableBody');
+                   feedbacks.forEach(feedback => {
+                       const tr = document.createElement('tr');
+                       
+                       const tdId = document.createElement('td');
+                       tdId.textContent = feedback.id;
+                       tr.appendChild(tdId);
+                       
+                       const tdTitulo = document.createElement('td');
+                       tdTitulo.textContent = feedback.titulo;
+                       tr.appendChild(tdTitulo);
+                       
+                       const tdDescricao = document.createElement('td');
+                       tdDescricao.textContent = feedback.descricao;
+                       tr.appendChild(tdDescricao);
+                       
+                       const tdTipo = document.createElement('td');
+                       tdTipo.textContent = feedback.tipo;
+                       tr.appendChild(tdTipo);
+                       
+                       const tdStatus = document.createElement('td');
+                       tdStatus.textContent = feedback.status;
+                       tr.appendChild(tdStatus);
+                       
+                       const tdActions = document.createElement('td');
+                       const viewButton = document.createElement('button');
+                       viewButton.textContent = 'Ver';
+                       viewButton.addEventListener('click', () => {
+                           window.location.href = `/feedbacks/${feedback.id}`;
+                       });
+                       tdActions.appendChild(viewButton);
+                       tr.appendChild(tdActions);
+                       
+                       tbody.appendChild(tr);
+                   });
+               })
+               .catch(error => {
+                   console.error('Erro ao buscar feedbacks:', error);
+               });
+       });
+   </script>
 </body>
 </html>

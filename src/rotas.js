@@ -15,8 +15,8 @@ const handleRoute = (req, res) => {
         if(req.method === 'GET' && req.url.includes('/listarusuarios')){
             usuarioController.getAll(req, res);
         }
-   } else if (route === 'feedbacks') {
-       if (req.method === 'GET' && !id) {
+   } else if (route === 'feedbacks' || route === 'feedbacksview') {
+       if (req.method === 'GET' && req.url.includes("/feedbacksview")) {
            feedbackController.index(req, res);
        } else if (req.method === 'GET' && id) {
            feedbackController.show(req, res, id);

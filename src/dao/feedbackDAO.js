@@ -1,9 +1,9 @@
 const Conexao = require('../database/conexao');
 
 class FeedbackDAO extends Conexao {
-   findAll(callback) {
-       const sql = `SELECT * FROM Feedback`;
-       this.db.all(sql, [], callback);
+   findAll(feedback, callback) {
+       const sql = `SELECT * FROM Feedback WHERE usuarioId = ?`;
+       this.db.all(sql, [feedback.usuarioId], callback);
    }
 
    findById(id, callback) {
